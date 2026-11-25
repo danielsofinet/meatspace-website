@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>MEATSPACE: co-op shooter, demo on Steam</title>
+  <meta name="description" content="MEATSPACE is a co-op third-person shooter. You and up to three friends take the world back from the machines. Play the demo and wishlist on Steam.">
+  <meta name="theme-color" content="#141210">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MEATSPACE">
+  <meta property="og:description" content="Take the world back from the machines. Co-op for up to four. Demo on Steam.">
+  <meta property="og:image" content="assets/img/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preload" href="assets/fonts/Aeonik-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/Aeonik-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js"></script>
+</head>
+<body>
+
+<!-- Ornament library (the same family as the in-game labels) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="orn-cross" viewBox="0 0 10 10"><path d="M5 0.5v9M0.5 5h9" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/></symbol>
+    <symbol id="orn-x" viewBox="0 0 10 10"><path d="M1.8 1.8l6.4 6.4M8.2 1.8l-6.4 6.4" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/></symbol>
+    <symbol id="orn-chain" viewBox="0 0 120 40">
+      <g fill="currentColor"><ellipse cx="14" cy="10" rx="13" ry="7"/><ellipse cx="42" cy="10" rx="15" ry="9"/><ellipse cx="72" cy="10" rx="15" ry="9"/><ellipse cx="100" cy="10" rx="13" ry="7"/></g>
+      <path d="M58 20v14M8 34h100" stroke="currentColor" stroke-width="1.4"/>
+    </symbol>
+    <symbol id="orn-rings" viewBox="0 0 120 40">
+      <g fill="none" stroke="currentColor" stroke-width="2"><circle cx="16" cy="20" r="11"/><circle cx="30" cy="20" r="11"/>
+      <circle cx="96" cy="20" r="14"/><circle cx="96" cy="20" r="8"/><circle cx="96" cy="20" r="2.5" fill="currentColor"/></g>
+      <path d="M43 20h37" stroke="currentColor" stroke-width="1.4"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="topbar" id="top">
+  <a class="topbar__mark" href="#top" aria-label="MEATSPACE home"><img src="assets/img/icon-white.png" alt="" width="22" height="29"></a>
+  <nav class="topbar__nav" aria-label="Main">
+    <a href="#trailer">Trailer</a>
+    <a href="#features">Features</a>
+    <a href="#early-access">Early access</a>
+  </nav>
+  <a class="btn btn--orange btn--sm js-steam" href="#" target="_blank" rel="noopener">Wishlist</a>
+</header>
+
+<main>
+
+  <!-- 1. HERO: parallax + logo ------------------------------------------- -->
+  <section class="hero" aria-label="MEATSPACE">
+    <div class="hero__scene" aria-hidden="true">
+      <div class="layer layer--sky" data-depth="0.92"><div class="sun"></div></div>
+      <img class="layer" data-depth="0.80" src="assets/img/parallax/layer-1.svg" alt="">
+      <img class="layer" data-depth="0.66" src="assets/img/parallax/layer-2.svg" alt="">
+      <img class="layer" data-depth="0.50" src="assets/img/parallax/layer-3.svg" alt="">
+      <img class="layer" data-depth="0.34" src="assets/img/parallax/layer-4.svg" alt="">
+      <img class="layer" data-depth="0.18" src="assets/img/parallax/layer-5.svg" alt="">
+      <img class="layer" data-depth="0.00" src="assets/img/parallax/layer-6.svg" alt="">
+    </div>
+    <div class="hero__logo" data-depth="0.58">
+      <h1><img src="assets/img/logo.webp" alt="MEATSPACE" width="1664" height="936"></h1>
+    </div>
+    <a class="hero__scroll" href="#demo" aria-label="Scroll down">
+      <span>Scroll</span>
+      <svg viewBox="0 0 12 18" aria-hidden="true"><path d="M6 1v15M1 11l5 5 5-5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+    </a>
+  </section>
+
+  <!-- 2. DEMO ON STEAM + EARLY ACCESS ------------------------------------ -->
+  <section class="demo" id="demo">
+    <div class="demo__bg" aria-hidden="true"></div>
+
+    <div class="wrap demo__inner">
+      <div class="demo__intro reveal">
+        <p class="eyebrow">Co-op third-person shooter / 1 to 4 players</p>
+        <h2 class="display">The machines took the jobs.<br>Take the world back.</h2>
+        <p class="lede">You and your friends fight district by district through a world run by AI, then take down the boss machine that runs each one.</p>
+      </div>
+
+      <!-- glass cluster, laid out like the in-game launch panel -->
+      <div class="cluster reveal">
+        <div class="glass cluster__info">
+          <div class="field">
+            <span class="label">Demo</span>
+            <span class="value">Out now</span>
+          </div>
+          <div class="field">
+            <span class="label">Platform</span>
+            <span class="value">Steam <small>PC</small></span>
+          </div>
+          <div class="field">
+            <span class="label">Co-op</span>
+            <span class="value">1 to 4 <small>Online</small></span>
+          </div>
+        </div>
+
+        <a class="launch js-steam" href="#" target="_blank" rel="noopener">
+          <span class="launch__title">Wishlist</span>
+          <span class="launch__sub">On Steam / Play the demo</span>
+          <svg class="launch__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19L19 5M8 5h11v11" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+        </a>
+
+        <form class="glass signup" id="early-access" novalidate>
+          <div class="signup__head">
+            <span class="label">Early access</span>
+            <span class="label label--dim">Sign-up list</span>
+          </div>
+          <p class="signup__copy">Get a key before everyone else. One email when it's ready, nothing else.</p>
+          <div class="signup__row">
+            <label class="sr-only" for="ea-email">Email address</label>
+            <input id="ea-email" type="email" name="email" autocomplete="email" inputmode="email" placeholder="you@email.com" required>
+            <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <button class="btn btn--ink" type="submit"><span>Sign up</span></button>
+          </div>
+          <p class="signup__msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <!-- part-number plate ornament -->
+      <div class="plate reveal" aria-hidden="true">
+        <svg class="plate__rings"><use href="#orn-rings"/></svg>
+        <div class="plate__mono">BUILT BY HUMANS</div>
+        <div class="plate__brand">MEATSPACE SYSTEMS <span>/ TYPE MS-01</span></div>
+        <div class="plate__mono plate__row"><span>SEALED</span><span class="plate__tiny">SERVICE<br>ONLY</span><span>PART NO.: MS20261125</span></div>
+      </div>
+      <div class="crossgrid reveal" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- 3. TRAILER ---------------------------------------------------------- -->
+  <section class="trailer" id="trailer">
+    <div class="wrap trailer__head">
+      <p class="eyebrow eyebrow--light">Transmission 01</p>
+      <h2 class="display display--light">Trailer</h2>
+      <svg class="chain" aria-hidden="true"><use href="#orn-chain"/></svg>
+    </div>
+    <div class="video" id="video">
+      <img class="video__poster" src="assets/img/trailer-poster.jpg" alt="" loading="lazy">
+      <button class="video__play" type="button" aria-label="Play trailer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+      </button>
+      <p class="video__soon label">Trailer coming soon</p>
+    </div>
+  </section>
+
+  <!-- 4. STACKING CARDS --------------------------------------------------- -->
+  <section class="features" id="features">
+    <div class="wrap features__head reveal">
+      <p class="eyebrow">What you're in for</p>
+      <h2 class="display">Inside MEATSPACE</h2>
+    </div>
+
+    <div class="stack" id="stack">
+      <article class="stack__item">
+        <div class="card">
+          <img src="assets/img/cards/explore.jpg" alt="A player in tall grass, with a giant machine's legs in the distance" loading="lazy">
+          <div class="card__meta glass">
+            <span class="tag">Explore</span>
+            <h3>A world gone quiet</h3>
+            <p>Meadows, canyons and deep forest, patrolled by things that never sleep.</p>
+            <span class="card__num">01 / 06</span>
+          </div>
+        </div>
+      </article>
+      <article class="stack__item">
+        <div class="card">
+          <img src="assets/img/cards/coop.jpg" alt="Placeholder: co-op gameplay" loading="lazy">
+          <div class="card__meta glass">
+            <span class="tag tag--orange">Co-op</span>
+            <h3>Bring three friends</h3>
+            <p>Drop in together, split up, cover each other, pick each other up off the floor.</p>
+            <span class="card__num">02 / 06</span>
+          </div>
+        </div>
+      </article>
+      <article class="stack__item">
+        <div class="card">
+          <img src="assets/img/cards/machines.jpg" alt="Placeholder: the machines" loading="lazy">
+          <div class="card__meta glass">
+            <span class="tag">Machines</span>
+            <h3>Small, big, flying</h3>
+            <p>Every machine has a job. Learn it, then take it apart. Guns for the air, blades for the ground.</p>
+            <span class="card__num">03 / 06</span>
+          </div>
+        </div>
+      </article>
+      <article class="stack__item">
+        <div class="card">
+          <img src="assets/img/cards/districts.jpg" alt="Placeholder: districts" loading="lazy">
+          <div class="card__meta glass">
+            <span class="tag tag--olive">Districts</span>
+            <h3>Reclaim them one by one</h3>
+            <p>Each district is run by its own boss AI. Shut it down and the district is yours again.</p>
+            <span class="card__num">04 / 06</span>
+          </div>
+        </div>
+      </article>
+      <article class="stack__item">
+        <div class="card">
+          <img src="assets/img/cards/loadout.jpg" alt="Placeholder: loadout screen" loading="lazy">
+          <div class="card__meta glass">
+            <span class="tag">Loadout</span>
+            <h3>Chips, skins and jetpacks</h3>
+            <p>Pick a class chip, build it up, and kit yourself out however you like.</p>
+            <span class="card__num">05 / 06</span>
+          </div>
+        </div>
+      </article>
+      <article class="stack__item">
+        <div class="card">
+          <img src="assets/img/cards/world.jpg" alt="An in-game poster: Visit Meatspace, The Wet World" loading="lazy">
+          <div class="card__meta glass">
+            <span class="tag tag--orange">The world</span>
+            <h3>Visit Meatspace</h3>
+            <p>The machines' own tourism board would love to show you around.</p>
+            <span class="card__num">06 / 06</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 5. FINAL CTA -------------------------------------------------------- -->
+  <section class="finale">
+    <div class="finale__glow" aria-hidden="true"></div>
+    <div class="wrap finale__inner reveal">
+      <img class="finale__icon" src="assets/img/icon-white.png" alt="" width="54" height="72">
+      <h2 class="display display--light">Help us build it.</h2>
+      <p class="lede lede--light">MEATSPACE is made by a tiny team. Every wishlist pushes it up Steam's charts, and that's what keeps it going.</p>
+      <div class="finale__ctas">
+        <a class="launch launch--inline js-steam" href="#" target="_blank" rel="noopener">
+          <span class="launch__title">Wishlist</span>
+          <span class="launch__sub">On Steam</span>
+          <svg class="launch__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19L19 5M8 5h11v11" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+        </a>
+        <a class="btn btn--glass" href="#early-access">Get early access</a>
+      </div>
+      <svg class="chain chain--light" aria-hidden="true"><use href="#orn-chain"/></svg>
+      <p class="plate__mono plate__mono--light">INS2026</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <img class="footer__logo" src="assets/img/logo.webp" alt="MEATSPACE" width="1664" height="936" loading="lazy">
+    <nav class="footer__links" aria-label="Footer">
+      <a class="js-steam" href="#" target="_blank" rel="noopener">Steam</a>
+      <a class="js-social" data-social="youtube" href="#" target="_blank" rel="noopener">YouTube</a>
+      <a class="js-social" data-social="discord" href="#" target="_blank" rel="noopener">Discord</a>
+      <a class="js-social" data-social="x" href="#" target="_blank" rel="noopener">X</a>
+    </nav>
+    <p class="footer__fine">&copy; <span id="year">2026</span> MEATSPACE. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
