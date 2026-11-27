@@ -60,6 +60,15 @@
     });
   }
 
+  /* ---- card videos: play only while on screen, poster only under reduced motion */
+  if (!reduce && "IntersectionObserver" in window) {
+    const vio = new IntersectionObserver(es => es.forEach(e => {
+      const v = e.target;
+      if (e.isIntersecting) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause();
+    }), { rootMargin: "0px 200px" });
+    document.querySelectorAll(".cardvid").forEach(v => vio.observe(v));
+  }
+
   /* ---- full-screen player -------------------------------------------------- */
   const player = $("#player"), pv = $("#playerVideo");
   let lenis = null;

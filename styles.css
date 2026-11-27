@@ -403,7 +403,7 @@ body.loader-gone .loader { visibility: hidden; }
   transform: translateX(var(--lag, 0px)); will-change: transform;
 }
 .fcard .visual { flex: 1 1 auto; min-height: 0; border-radius: var(--radius); overflow: hidden; background: var(--paper-2); }
-.fcard .visual img { width: 100%; height: 100%; object-fit: cover; }
+.fcard .visual img, .fcard .visual video { display: block; width: 100%; height: 100%; object-fit: cover; }
 .fcard__meta { display: flex; align-items: center; justify-content: space-between; margin: 18px 10px 0; }
 .fcard__num { font: 500 11px/1 var(--mono); letter-spacing: .12em; color: var(--ink-soft); }
 .fcard h3 { margin: 12px 10px 0; font-weight: 700; font-size: clamp(22px, 2.2vw, 28px); line-height: 1.05; letter-spacing: -.015em; }
@@ -445,6 +445,8 @@ body.loader-gone .loader { visibility: hidden; }
 }
 .gitem { position: relative; }
 .gitem img { width: 100%; height: auto; transition: transform .6s var(--ease); }
+/* 14 stills in 3 columns: one taller crop lets the columns balance (5 / 5 / 3 + tall) */
+@media (min-width: 721px) { .gitem--tall img { aspect-ratio: 8 / 9; object-fit: cover; object-position: 47% 50%; } }
 .gitem::before {                  /* faint scanlines on every still */
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: var(--scan); opacity: .45;
 }
