@@ -22,8 +22,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261127e">
-  <script src="config.js?v=20261127e"></script>
+  <link rel="stylesheet" href="styles.css?v=20261127f">
+  <script src="config.js?v=20261127f"></script>
 </head>
 <body>
 
@@ -314,6 +314,18 @@
   </div>
 </footer>
 
+<!-- SIGN-UP TOAST: shows after the early-access form is sent, leaves on its own after 6 s -->
+<div class="toast" id="toast" role="status" aria-live="polite" hidden>
+  <div class="toast__body">
+    <p class="toast__osd osd"><span class="toast__rec"></span>Signal received</p>
+    <p class="toast__title">You're on the list.</p>
+    <p class="toast__text">Confirm in your inbox, then wishlist MEATSPACE on Steam. It's the best thing you can do for us.</p>
+  </div>
+  <a class="btn btn--orange toast__cta js-steam" href="#" target="_blank" rel="noopener">Wishlist on Steam</a>
+  <button class="toast__close" type="button" aria-label="Close">&times;</button>
+  <span class="toast__timer" aria-hidden="true"></span>
+</div>
+
 <!-- FULL-SCREEN PLAYER -->
 <div class="player" id="player" hidden>
   <video id="playerVideo" controls playsinline preload="none"></video>
@@ -325,6 +337,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-<script src="main.js?v=20261127e"></script>
+<script src="main.js?v=20261127f"></script>
 </body>
 </html>

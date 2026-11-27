@@ -107,6 +107,31 @@
   document.addEventListener("webkitfullscreenchange", onFsChange);
   document.addEventListener("keydown", e => { if (e.key === "Escape" && !player.hidden) closePlayer(); });
 
+  /* ---- sign-up toast: bottom centre, 6 s, the timer pauses while hovered ------- */
+  const toast = $("#toast");
+  let toastLeft = 0, toastT0 = 0, toastRaf = 0;
+  function hideToast() {
+    cancelAnimationFrame(toastRaf);
+    toast.classList.remove("is-in");
+    setTimeout(() => { if (!toast.classList.contains("is-in")) toast.hidden = true; }, 260);
+  }
+  function tickToast(now) {
+    const left = toastLeft - (now - toastT0);
+    toast.style.setProperty("--left", Math.max(0, left / 6000));
+    if (left <= 0) return hideToast();
+    toastRaf = requestAnimationFrame(tickToast);
+  }
+  function runToast() { toastT0 = performance.now(); toastRaf = requestAnimationFrame(tickToast); }
+  function showToast() {
+    toast.hidden = false; toastLeft = 6000;
+    toast.style.setProperty("--left", 1);
+    void toast.offsetWidth; toast.classList.add("is-in");
+    cancelAnimationFrame(toastRaf); runToast();
+  }
+  toast.addEventListener("mouseenter", () => { cancelAnimationFrame(toastRaf); toastLeft -= performance.now() - toastT0; });
+  toast.addEventListener("mouseleave", () => { if (toast.classList.contains("is-in")) runToast(); });
+  $(".toast__close", toast).addEventListener("click", hideToast);
+
   /* ---- early-access sign-up ------------------------------------------------- */
   const form = $("#early-access");
   const msg = $(".signup__msg", form);
@@ -137,8 +162,9 @@
     say("Sending…");
     const done = () => {
       form.classList.add("is-done");
-      say("You're on the list. Check your inbox, and while you're there, wishlist us on Steam.", "ok");
+      say("You're on the list. Check your inbox to confirm.", "ok");
       post.remove();
+      showToast();
     };
     frame.addEventListener("load", done, { once: true });
     setTimeout(() => { if (!form.classList.contains("is-done")) done(); }, 6000);
