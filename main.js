@@ -65,7 +65,10 @@
   let lenis = null;
   const isFs = () => document.fullscreenElement || document.webkitFullscreenElement;
   function openPlayer() {
-    if (!pv.src) pv.src = CFG.demoVideo || "assets/video/meatspace-demo.mp4";
+    if (!pv.src) {                                                          // AV1 where the browser decodes it, H.264 elsewhere
+      const av1 = pv.canPlayType('video/mp4; codecs="av01.0.08M.10"') === "probably";
+      pv.src = (av1 || !CFG.demoVideoFallback) ? (CFG.demoVideo || "assets/video/meatspace-demo-av1.mp4") : CFG.demoVideoFallback;
+    }
     player.hidden = false;
     if (!reduce) {                                                           // the tape catches as it starts
       player.classList.remove("is-glitch"); void player.offsetWidth; player.classList.add("is-glitch");

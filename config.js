@@ -6,8 +6,10 @@ window.MEATSPACE = {
   steamUrl: "https://store.steampowered.com/app/000000/MEATSPACE/",
 
   // The full video that opens full screen from the hero's play button.
+  // demoVideo is AV1 (small, sharp); browsers that can't decode AV1 get demoVideoFallback (H.264).
   // GitHub Pages refuses files over 100 MB: re-encode bigger videos first (see README).
-  demoVideo: "assets/video/meatspace-demo.mp4",
+  demoVideo: "assets/video/meatspace-demo-av1.mp4",
+  demoVideoFallback: "assets/video/meatspace-demo-h264.mp4",
 
   // Early-access sign-up. The form POSTs straight to your mailing-list provider,
   // so emails are stored there (not on GitHub) and the provider sends the welcome mail.
