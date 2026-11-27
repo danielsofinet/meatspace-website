@@ -152,7 +152,11 @@ section { position: relative; }
           mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M5 .5v9M.5 5h9' stroke='black' stroke-width='2' fill='none'/%3E%3C/svg%3E") center/contain no-repeat;
 }
 .tag--orange { background: linear-gradient(100deg, var(--orange-hi), var(--orange)); color: var(--ink-2); }
-.tag--olive { background: var(--olive); color: var(--paper); }
+.tag--vhs {                 /* tape-box black, the logo stripe along the bottom edge, chromatic text */
+  background: var(--stripe) left bottom / 100% 3px no-repeat, #141118; color: #fff;
+  text-shadow: 1px 0 rgba(255,42,212,.7), -1px 0 rgba(24,224,255,.7);
+}
+.tag--vhs::before { background: var(--vhs-yellow); }
 
 /* --- loader: VCR blue screen, wiped off by the stripe ---------------------- */
 .osd {
