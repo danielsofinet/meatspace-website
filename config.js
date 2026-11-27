@@ -25,7 +25,7 @@ window.MEATSPACE = {
   //
   //   MailerLite / Google Forms work the same way: paste the form's POST URL and field name.
   signup: {
-    action: "",
+    action: "https://app.kit.com/forms/10251946/subscriptions",
     emailField: "email_address",
   },
 
