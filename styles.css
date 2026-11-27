@@ -259,21 +259,22 @@ body.loader-gone .loader { visibility: hidden; }
 }
 .hero-inner {
   display: flex; flex-direction: column; align-items: center;
-  padding: 80px var(--gutter) 40px;
+  width: 100%; margin-top: auto;
+  padding: 120px var(--gutter) clamp(90px, 13vh, 140px);
   transform-origin: 50% 40%; will-change: transform;
 }
 /* the hero copy sits in one dark glass card over the video */
 .hero-card {
-  position: relative; width: min(560px, 100%);
+  position: relative; width: min(780px, 100%);
   display: flex; flex-direction: column; align-items: center;
-  padding: 30px 34px 32px;
+  padding: 34px 48px 36px;
   border-radius: var(--radius-card);
   background: rgba(20, 18, 16, .42);
   border: 1px solid rgba(255,255,255,.14);
   -webkit-backdrop-filter: blur(20px) saturate(140%); backdrop-filter: blur(20px) saturate(140%);
   box-shadow: 0 1px 0 rgba(255,255,255,.12) inset, 0 30px 70px -30px rgba(0,0,0,.7);
 }
-.hero__logo { width: min(78%, 380px); }
+.hero__logo { width: min(62%, 420px); }
 .hero__logo .line { display: block; margin: -9% 0 -8%; }  /* the PNG has empty glow room top and bottom */
 .hero__logo img { width: 100%; height: auto; display: block; }
 .hero__tag {
@@ -282,44 +283,39 @@ body.loader-gone .loader { visibility: hidden; }
   color: var(--paper); text-wrap: balance;
 }
 .hero__sub {
-  margin-top: 10px; max-width: 30em;
+  margin-top: 10px; max-width: 40em;
   font-size: clamp(15px, 1.25vw, 17px); line-height: 1.45; color: var(--paper-dim);
   text-wrap: balance;
 }
 .hero__line { display: block; }
 .nb { white-space: nowrap; }
 
-/* VCR transport key: chunky plastic, printed label, presses down into the deck */
+/* VCR transport key: one chunky plastic key with the label printed on it; it presses down into the deck */
 .vcr {
-  margin-top: 24px; display: inline-flex; align-items: center; gap: 14px;
-  background: none; border: 0; padding: 0; cursor: pointer; color: var(--paper); text-align: left;
-}
-.vcr__key {
-  position: relative; width: 74px; height: 42px; border-radius: 6px;
-  display: grid; place-items: center;
+  position: relative; margin-top: 24px;
+  display: inline-flex; align-items: center; gap: 12px;
+  height: 50px; padding: 0 24px 0 20px; border-radius: 7px;
+  cursor: pointer; color: var(--paper);
   background: linear-gradient(180deg, #45413c 0%, #2a2724 55%, #211f1c 100%);
   border: 1px solid rgba(0,0,0,.6);
   box-shadow:
     0 1px 0 rgba(255,255,255,.22) inset,
     0 -2px 0 rgba(0,0,0,.35) inset,
     0 4px 0 #0d0c0b,
-    0 10px 22px -6px rgba(0,0,0,.7);
-  color: var(--orange-hi);
+    0 12px 24px -8px rgba(0,0,0,.7);
   transition: transform .12s var(--ease), box-shadow .12s var(--ease);
 }
-.vcr__key::before {           /* the little status LED */
-  content: ""; position: absolute; top: 6px; right: 7px; width: 4px; height: 4px; border-radius: 50%;
+.vcr::before {                /* the little status LED */
+  content: ""; position: absolute; top: 7px; right: 8px; width: 4px; height: 4px; border-radius: 50%;
   background: #4b2216; transition: background .2s var(--ease), box-shadow .2s var(--ease);
 }
-.vcr__key svg { width: 18px; filter: drop-shadow(0 0 6px rgba(246,127,74,.55)); }
-.vcr__text { display: flex; flex-direction: column; gap: 6px; }
-.vcr__print { font: 600 10.5px/1 var(--mono); letter-spacing: .22em; text-transform: uppercase; color: rgba(236,237,233,.5); }
-.vcr__label { font: 600 12.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; }
+.vcr__icon { width: 16px; flex: none; color: var(--orange-hi); filter: drop-shadow(0 0 6px rgba(246,127,74,.55)); }
+.vcr__label { font: 600 13px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; white-space: nowrap; }
 @media (hover: hover) and (pointer: fine) {
-  .vcr:hover .vcr__key::before { background: #ff5a2a; box-shadow: 0 0 6px 1px rgba(255,90,42,.8); }
+  .vcr:hover::before { background: #ff5a2a; box-shadow: 0 0 6px 1px rgba(255,90,42,.8); }
   .vcr:hover .vcr__label { animation: vhs-split .28s steps(1) both; }
 }
-.vcr:active .vcr__key {
+.vcr:active {
   transform: translateY(3px);
   box-shadow: 0 1px 0 rgba(255,255,255,.14) inset, 0 -1px 0 rgba(0,0,0,.35) inset, 0 1px 0 #0d0c0b, 0 4px 10px -4px rgba(0,0,0,.7);
 }
