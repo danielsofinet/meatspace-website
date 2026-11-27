@@ -5,9 +5,9 @@ window.MEATSPACE = {
   // Your Steam store page. Replace once the app page is live.
   steamUrl: "https://store.steampowered.com/app/000000/MEATSPACE/",
 
-  // YouTube video ID: the part after "watch?v=" (e.g. "dQw4w9WgXcQ").
-  // Leave it empty and the video block shows a "trailer soon" poster.
-  youtubeId: "",
+  // The full video that opens full screen from the hero's play button.
+  // GitHub Pages refuses files over 100 MB: re-encode bigger videos first (see README).
+  demoVideo: "assets/video/meatspace-demo.mp4",
 
   // Early-access sign-up. The form POSTs straight to your mailing-list provider,
   // so emails are stored there (not on GitHub) and the provider sends the welcome mail.
