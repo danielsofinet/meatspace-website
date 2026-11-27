@@ -150,10 +150,13 @@
      Logo: wipe-up reveal; the clip is cleared afterwards so the VHS glow is never boxed in. */
   const logoImg = $(".hero__logo .line > img");
   gsap.set(logoImg, { clipPath: "inset(100% -20% -20% -20%)", y: 40 });
+  const heroCard = $("#heroCard");
+  gsap.set(heroCard, { opacity: 0, y: 24, scale: 0.97, filter: "blur(8px)" });
   const heroIntro = () => {
-    gsap.to(logoImg, { clipPath: "inset(-20% -20% -20% -20%)", y: 0, duration: 1.1, ease: "expo.out", delay: 0.35, clearProps: "clipPath" });
-    $$(".hero .reveal").forEach(el => {
-      gsap.to(el, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out", delay: el.classList.contains("play") ? 0.62 : 0.52 });
+    gsap.to(heroCard, { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.8, ease: "expo.out", delay: 0.25, clearProps: "filter" });
+    gsap.to(logoImg, { clipPath: "inset(-20% -20% -20% -20%)", y: 0, duration: 1.1, ease: "expo.out", delay: 0.4, clearProps: "clipPath" });
+    $$(".hero .reveal").forEach((el, i) => {
+      gsap.to(el, { opacity: 1, y: 0, duration: 0.7, ease: "expo.out", delay: 0.55 + i * 0.07 });
     });
   };
   if (document.body.classList.contains("loaded")) heroIntro();

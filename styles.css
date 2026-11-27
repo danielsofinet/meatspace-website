@@ -262,30 +262,67 @@ body.loader-gone .loader { visibility: hidden; }
   padding: 80px var(--gutter) 40px;
   transform-origin: 50% 40%; will-change: transform;
 }
-.hero__logo { width: min(74vw, 760px); }
-.hero__logo .line { display: block; }
+/* the hero copy sits in one dark glass card over the video */
+.hero-card {
+  position: relative; width: min(560px, 100%);
+  display: flex; flex-direction: column; align-items: center;
+  padding: 30px 34px 32px;
+  border-radius: var(--radius-card);
+  background: rgba(20, 18, 16, .42);
+  border: 1px solid rgba(255,255,255,.14);
+  -webkit-backdrop-filter: blur(20px) saturate(140%); backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: 0 1px 0 rgba(255,255,255,.12) inset, 0 30px 70px -30px rgba(0,0,0,.7);
+}
+.hero__logo { width: min(78%, 380px); }
+.hero__logo .line { display: block; margin: -9% 0 -8%; }  /* the PNG has empty glow room top and bottom */
 .hero__logo img { width: 100%; height: auto; display: block; }
+.hero__tag {
+  margin-top: 14px;
+  font-weight: 700; font-size: clamp(22px, 2.3vw, 30px); line-height: 1.05; letter-spacing: -.02em;
+  color: var(--paper); text-wrap: balance;
+}
 .hero__sub {
-  margin-top: 6px; max-width: 34em;
-  font-size: clamp(16px, 1.5vw, 20px); color: var(--paper);
-  text-shadow: 0 2px 18px rgba(0,0,0,.55);
+  margin-top: 10px; max-width: 30em;
+  font-size: clamp(15px, 1.25vw, 17px); line-height: 1.45; color: var(--paper-dim);
+  text-wrap: balance;
 }
-.play {
-  margin-top: 30px; display: inline-flex; align-items: center; gap: 14px;
-  background: none; border: 0; cursor: pointer; color: var(--paper);
+.hero__line { display: block; }
+.nb { white-space: nowrap; }
+
+/* VCR transport key: chunky plastic, printed label, presses down into the deck */
+.vcr {
+  margin-top: 24px; display: inline-flex; align-items: center; gap: 14px;
+  background: none; border: 0; padding: 0; cursor: pointer; color: var(--paper); text-align: left;
 }
-.play__btn {
-  width: 64px; height: 64px; border-radius: 50%;
+.vcr__key {
+  position: relative; width: 74px; height: 42px; border-radius: 6px;
   display: grid; place-items: center;
-  background: var(--orange-grad); color: var(--ink-2);
-  border: 1px solid rgba(255,255,255,.45);
-  box-shadow: 0 18px 50px -12px rgba(227,74,36,.8);
-  transition: transform .2s var(--ease);
+  background: linear-gradient(180deg, #45413c 0%, #2a2724 55%, #211f1c 100%);
+  border: 1px solid rgba(0,0,0,.6);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.22) inset,
+    0 -2px 0 rgba(0,0,0,.35) inset,
+    0 4px 0 #0d0c0b,
+    0 10px 22px -6px rgba(0,0,0,.7);
+  color: var(--orange-hi);
+  transition: transform .12s var(--ease), box-shadow .12s var(--ease);
 }
-.play:active .play__btn { transform: scale(.95); }
-.play__btn svg { width: 24px; margin-left: 3px; }
-.play__label { font: 600 12.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
-.play:hover .play__btn { transform: scale(1.07); }
+.vcr__key::before {           /* the little status LED */
+  content: ""; position: absolute; top: 6px; right: 7px; width: 4px; height: 4px; border-radius: 50%;
+  background: #4b2216; transition: background .2s var(--ease), box-shadow .2s var(--ease);
+}
+.vcr__key svg { width: 18px; filter: drop-shadow(0 0 6px rgba(246,127,74,.55)); }
+.vcr__text { display: flex; flex-direction: column; gap: 6px; }
+.vcr__print { font: 600 10.5px/1 var(--mono); letter-spacing: .22em; text-transform: uppercase; color: rgba(236,237,233,.5); }
+.vcr__label { font: 600 12.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; }
+@media (hover: hover) and (pointer: fine) {
+  .vcr:hover .vcr__key::before { background: #ff5a2a; box-shadow: 0 0 6px 1px rgba(255,90,42,.8); }
+  .vcr:hover .vcr__label { animation: vhs-split .28s steps(1) both; }
+}
+.vcr:active .vcr__key {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 rgba(255,255,255,.14) inset, 0 -1px 0 rgba(0,0,0,.35) inset, 0 1px 0 #0d0c0b, 0 4px 10px -4px rgba(0,0,0,.7);
+}
 .hero__scroll {
   position: absolute; right: var(--gutter); bottom: 26px;
   display: flex; flex-direction: column; align-items: center; gap: 8px;
@@ -551,7 +588,7 @@ body.loader-gone .loader { visibility: hidden; }
 /* hover: the label splits into cyan and magenta for a moment, like the logo's edges.
    Pointer devices only, and short: it plays every time someone aims at a button. */
 @media (hover: hover) and (pointer: fine) {
-  .btn:hover, .pill .cta:hover, .play:hover .play__label, .launch:hover .launch__title, .flinks a:hover {
+  .btn:hover, .pill .cta:hover, .launch:hover .launch__title, .flinks a:hover {
     animation: vhs-split .28s steps(1) both;
   }
 }
@@ -565,6 +602,7 @@ body.loader-gone .loader { visibility: hidden; }
 
 /* --- reveal helpers ----------------------------------------------------------------- */
 .reveal { opacity: 0; transform: translateY(32px); }
+.hero .reveal { transform: translateY(12px); }
 
 /* --- responsive ---------------------------------------------------------------------- */
 @media (max-width: 900px) {
@@ -581,7 +619,8 @@ body.loader-gone .loader { visibility: hidden; }
   .pill nav a { padding: 9px 8px; font-size: 11px; }
   .pill nav a:not([data-sec="features"]) { display: none; }
   .topblur { height: 90px; }
-  .hero__logo { width: 92vw; }
+  .hero-card { padding: 24px 20px 26px; }
+  .hero__logo { width: min(80%, 320px); }
   .hero__scroll { display: none; }
   .hero__osd--tl { bottom: 46px; }
   .hero__osd { font-size: 13px; }
@@ -609,7 +648,7 @@ body.loader-gone .loader { visibility: hidden; }
   .reveal { opacity: 1 !important; transform: none !important; }
   .word, .subline-i { opacity: 1 !important; filter: none !important; transform: none !important; }
   .hero__scroll svg, .loader__track, .vhs-grain, .vhs-roll { animation: none !important; }
-  .btn, .pill .cta, .play__label, .launch__title, .flinks a, .player.is-glitch video { animation: none !important; }
+  .btn, .pill .cta, .vcr__label, .launch__title, .flinks a, .player.is-glitch video { animation: none !important; }
   body.loaded .loader { transform: none; opacity: 0; transition: opacity .3s ease; }
   .tear { display: none; }
   .features .pin { height: auto; display: block; overflow: visible; padding-bottom: 80px; }
