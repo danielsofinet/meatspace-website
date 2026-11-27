@@ -188,6 +188,12 @@
   wordReveal($("#featTitle"), "#featTitle", "top 85%", "top 40%");
   wordReveal($("#worldTitle"), "#worldTitle", "top 85%", "top 40%");
 
+  /* Section 2 background drifts slower than the page */
+  gsap.fromTo("#fillImg", { yPercent: -6 }, {
+    yPercent: 6, ease: "none",
+    scrollTrigger: { trigger: ".fill", start: "top bottom", end: "bottom top", scrub: true },
+  });
+
   /* Sub copy: measured into visual lines, each slides up from a clip */
   const sub = $("#fillSub");
   if (sub) {
