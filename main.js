@@ -41,12 +41,23 @@
     });
   });
 
-  /* ---- hero loop: only decode while the hero is on screen ------------------ */
-  const heroVideo = $("#heroVideo");
+  /* ---- hero loop: only decode (and run the VHS grain) while the hero is on screen ---- */
+  const heroVideo = $("#heroVideo"), heroSec = $(".hero");
   if (heroVideo && "IntersectionObserver" in window) {
     new IntersectionObserver(([e]) => {
+      heroSec.classList.toggle("is-off", !e.isIntersecting);
       if (e.isIntersecting) heroVideo.play().catch(() => {}); else heroVideo.pause();
     }).observe(heroVideo);
+  }
+
+  /* ---- hero VCR counter follows the loop's playhead ---------------------------- */
+  const heroTc = $("#heroTc");
+  if (heroVideo && heroTc) {
+    const p = n => String(n).padStart(2, "0");
+    heroVideo.addEventListener("timeupdate", () => {
+      const s = Math.floor(heroVideo.currentTime);
+      heroTc.textContent = `00:${p(Math.floor(s / 60))}:${p(s % 60)}`;
+    });
   }
 
   /* ---- full-screen player -------------------------------------------------- */
@@ -56,6 +67,9 @@
   function openPlayer() {
     if (!pv.src) pv.src = CFG.demoVideo || "assets/video/meatspace-demo.mp4";
     player.hidden = false;
+    if (!reduce) {                                                           // the tape catches as it starts
+      player.classList.remove("is-glitch"); void player.offsetWidth; player.classList.add("is-glitch");
+    }
     if (lenis) lenis.stop();
     heroVideo && heroVideo.pause();
     pv.currentTime = 0;
@@ -132,17 +146,56 @@
   gsap.ticker.add(t => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);
 
-  /* Hero logo: wipe-up reveal; the clip is cleared afterwards so the VHS glow is never boxed in */
-  gsap.fromTo(".hero__logo .line > img", { clipPath: "inset(100% -20% -20% -20%)", y: 40 }, { clipPath: "inset(-20% -20% -20% -20%)", y: 0, duration: 1.15, ease: "power4.out", delay: 0.15, clearProps: "clipPath" });
+  /* Hero intro waits for the loader's stripe wipe, then starts while the wipe is mid-screen.
+     Logo: wipe-up reveal; the clip is cleared afterwards so the VHS glow is never boxed in. */
+  const logoImg = $(".hero__logo .line > img");
+  gsap.set(logoImg, { clipPath: "inset(100% -20% -20% -20%)", y: 40 });
+  const heroIntro = () => {
+    gsap.to(logoImg, { clipPath: "inset(-20% -20% -20% -20%)", y: 0, duration: 1.1, ease: "expo.out", delay: 0.35, clearProps: "clipPath" });
+    $$(".hero .reveal").forEach(el => {
+      gsap.to(el, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out", delay: el.classList.contains("play") ? 0.62 : 0.52 });
+    });
+  };
+  if (document.body.classList.contains("loaded")) heroIntro();
+  else document.addEventListener("ms:loaded", heroIntro, { once: true });
 
   /* Fade-up reveal */
   $$(".reveal").forEach(el => {
-    const inHero = el.closest(".hero");
-    gsap.to(el, {
-      opacity: 1, y: 0, duration: 0.9, ease: "power3.out",
-      delay: inHero ? 0.45 + (el.classList.contains("play") ? 0.12 : 0) : 0,
-      scrollTrigger: inHero ? undefined : { trigger: el, start: "top 88%" },
+    if (el.closest(".hero")) return;
+    gsap.to(el, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%" } });
+  });
+
+  /* Stripe bars draw in from the left (or out from the centre) once */
+  $$(".js-bar").forEach(b => {
+    const from = b.classList.contains("vhs-bar--center") ? "inset(-20px 50% -20px 50%)" : "inset(-20px 100% -20px -20px)";
+    gsap.fromTo(b, { clipPath: from }, {
+      clipPath: "inset(-20px -20px -20px -20px)", duration: 0.9, ease: "expo.out", clearProps: "clipPath",
+      scrollTrigger: { trigger: b, start: "top 90%", once: true },
     });
+  });
+
+  /* Tape tear: two bands jitter across the screen as each new section arrives.
+     Once per section, and never twice within a second, so fast scrolling stays calm. */
+  const tear = $("#tear"), tearBands = $$("i", tear);
+  let lastTear = -1e4;
+  const playTear = () => {
+    const now = performance.now();
+    if (now - lastTear < 1000) return;
+    lastTear = now;
+    const tl = gsap.timeline({
+      onStart: () => { tear.style.visibility = "visible"; },
+      onComplete: () => { tear.style.visibility = "hidden"; },
+    });
+    tearBands.forEach((b, i) => {
+      const at = i * 0.06;
+      gsap.set(b, { top: gsap.utils.random(14, 76) + "vh", height: gsap.utils.random(3, 11) + "vh", x: 0, opacity: 0 });
+      tl.to(b, { opacity: 1, duration: 0.04, ease: "none" }, at)
+        .to(b, { keyframes: { x: [-28, 18, -10, 6, 0] }, duration: 0.26, ease: "steps(5)" }, at)
+        .to(b, { opacity: 0, duration: 0.1, ease: "power2.out" }, at + 0.22);
+    });
+  };
+  $$(".band, .fill, .features, .world, .faq").forEach(sec => {
+    ScrollTrigger.create({ trigger: sec, start: "top 65%", once: true, onEnter: playTear });
   });
 
   /* Hero: inner block tilts + parallaxes; the hero insets with rounded bottom corners */
@@ -165,8 +218,11 @@
   const bt = $("#bandTrack");
   if (bt) gsap.to(bt, { x: () => -bt.scrollWidth / 2, duration: 34, ease: "none", repeat: -1 });
 
-  /* Word-by-word blur + rise + fade, scrubbed to scroll */
+  /* Word-by-word blur + rise + fade, scrubbed to scroll. Each word arrives in one of
+     the logo's stripe colours (in order) and settles to the heading's own colour. */
+  const STRIPE = ["#18e0ff", "#3b6dff", "#8b45ff", "#ff2ad4", "#ff2f57", "#ff8a1e", "#ffe41c"];
   const wordReveal = (el, trigger, start, end) => {
+    const finalColor = getComputedStyle(el).color;
     const frag = document.createDocumentFragment();
     el.childNodes.forEach(node => {
       if (node.nodeName === "BR") { frag.appendChild(document.createElement("br")); return; }
@@ -178,11 +234,10 @@
     });
     el.textContent = ""; el.appendChild(frag);
     const spans = $$(".word", el);
-    gsap.set(spans, { opacity: 0, filter: "blur(10px)", yPercent: 42 });
-    gsap.to(spans, {
-      opacity: 1, filter: "blur(0px)", yPercent: 0, ease: "power2.out", stagger: { each: 0.5 }, duration: 1,
-      scrollTrigger: { trigger, start, end, scrub: 2 },
-    });
+    gsap.set(spans, { opacity: 0, filter: "blur(10px)", yPercent: 42, color: i => STRIPE[i % STRIPE.length] });
+    gsap.timeline({ scrollTrigger: { trigger, start, end, scrub: 2 } })
+      .to(spans, { opacity: 1, filter: "blur(0px)", yPercent: 0, ease: "power2.out", stagger: 0.5, duration: 1 }, 0)
+      .to(spans, { color: finalColor, ease: "power1.in", stagger: 0.5, duration: 1 }, 0.7);
   };
   wordReveal($("#fillText"), ".fill", "top 82%", "top 22%");
   wordReveal($("#featTitle"), "#featTitle", "top 85%", "top 40%");

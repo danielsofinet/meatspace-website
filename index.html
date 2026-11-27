@@ -25,21 +25,43 @@
 </head>
 <body>
 
-<!-- LOADER: the cross ornament draws itself, then the page fades in -->
+<!-- LOADER: VCR blue screen with a running counter; on load the logo stripe wipes it off to the right -->
 <div class="loader" id="loader" role="status" aria-label="Loading">
-  <svg viewBox="0 0 40 40" aria-hidden="true">
-    <path d="M20 4v32M4 20h32" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-  </svg>
-  <span class="loader__label">MEATSPACE SYSTEMS</span>
+  <div class="loader__wipe" aria-hidden="true"></div>
+  <div class="loader__screen" aria-hidden="true">
+    <span class="osd loader__play">Play &#9654;</span>
+    <span class="osd loader__ch">CH 03</span>
+    <span class="osd loader__brand">MEATSPACE SYSTEMS</span>
+    <span class="osd loader__tc">SP <span id="loaderTc">00:00:00:00</span></span>
+    <div class="loader__track"></div>
+  </div>
 </div>
 <script>
-  window.addEventListener('load', function () {
-    setTimeout(function () { document.body.classList.add('loaded'); }, 550);
-  });
+  (function () {
+    var t0 = performance.now(), tc = document.getElementById('loaderTc'), run = true;
+    function p(n) { return (n < 10 ? '0' : '') + n; }
+    (function tick() {
+      if (!run) return;
+      var fr = Math.floor((performance.now() - t0) / 1000 * 30);
+      tc.textContent = '00:00:' + p(Math.floor(fr / 30) % 60) + ':' + p(fr % 30);
+      requestAnimationFrame(tick);
+    })();
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        run = false;
+        document.body.classList.add('loaded');
+        document.dispatchEvent(new Event('ms:loaded'));
+        setTimeout(function () { document.body.classList.add('loader-gone'); }, 1100);
+      }, 450);
+    });
+  })();
 </script>
 
 <!-- PROGRESSIVE TOP-EDGE BLUR (layers built in main.js) -->
 <div class="topblur" id="topblur" aria-hidden="true"></div>
+
+<!-- TAPE TEAR: two bands that flash across the screen as a new section arrives -->
+<div class="tear" id="tear" aria-hidden="true"><i></i><i></i></div>
 
 <!-- NAV PILL -->
 <div class="nav">
@@ -75,6 +97,9 @@
       <source src="assets/video/hero-loop.mp4" type="video/mp4">
     </video>
     <div class="hero__shade" aria-hidden="true"></div>
+    <div class="hero__vhs" aria-hidden="true"><div class="vhs-grain"></div><div class="vhs-roll"></div></div>
+    <span class="osd hero__osd hero__osd--tl" aria-hidden="true">Play &#9654;</span>
+    <span class="osd hero__osd hero__osd--bl" aria-hidden="true">SP <span id="heroTc">00:00:00</span></span>
 
     <div class="hero-inner" id="heroInner">
       <h1 class="hero__logo"><span class="line"><img src="assets/img/logo.webp" alt="MEATSPACE" width="1664" height="936"></span></h1>
@@ -147,6 +172,7 @@
     <div class="wrap head">
       <p class="eyebrow reveal">What you're in for</p>
       <h2 class="display" id="featTitle">Inside<br>MEATSPACE.</h2>
+      <span class="vhs-bar js-bar" aria-hidden="true"></span>
     </div>
     <div class="pin" id="featPin">
       <div class="ftrack" id="ftrack">
@@ -208,14 +234,15 @@
     <div class="wrap">
       <p class="eyebrow eyebrow--center reveal">Transmission 01</p>
       <h2 class="display" id="worldTitle">Postcards from<br>Meatspace.</h2>
+      <span class="vhs-bar vhs-bar--center js-bar" aria-hidden="true"></span>
       <p class="world__sub reveal">Stills from the intro. The machines kept the place tidy for you.</p>
       <div class="gallery">
-        <figure class="gitem"><img src="assets/img/gallery/g-1.webp" alt="A giant walking machine crossing a wheat field" loading="lazy"></figure>
-        <figure class="gitem"><img src="assets/img/gallery/g-2.webp" alt="An overgrown city street" loading="lazy"></figure>
-        <figure class="gitem"><img src="assets/img/gallery/g-3.webp" alt="Sunlight through a pine forest" loading="lazy"></figure>
-        <figure class="gitem"><img src="assets/img/gallery/g-4.webp" alt="An empty street with abandoned cars" loading="lazy"></figure>
-        <figure class="gitem"><img src="assets/img/gallery/g-5.webp" alt="A glowing machine core held in two hands" loading="lazy"></figure>
-        <figure class="gitem"><img src="assets/img/gallery/g-6.webp" alt="A dark alley" loading="lazy"></figure>
+        <figure class="gitem" data-tc="00:00:12"><img src="assets/img/gallery/g-1.webp" alt="A giant walking machine crossing a wheat field" loading="lazy"></figure>
+        <figure class="gitem" data-tc="00:00:31"><img src="assets/img/gallery/g-2.webp" alt="An overgrown city street" loading="lazy"></figure>
+        <figure class="gitem" data-tc="00:00:47"><img src="assets/img/gallery/g-3.webp" alt="Sunlight through a pine forest" loading="lazy"></figure>
+        <figure class="gitem" data-tc="00:01:05"><img src="assets/img/gallery/g-4.webp" alt="An empty street with abandoned cars" loading="lazy"></figure>
+        <figure class="gitem" data-tc="00:01:22"><img src="assets/img/gallery/g-5.webp" alt="A glowing machine core held in two hands" loading="lazy"></figure>
+        <figure class="gitem" data-tc="00:01:40"><img src="assets/img/gallery/g-6.webp" alt="A dark alley" loading="lazy"></figure>
       </div>
     </div>
   </section>
@@ -224,6 +251,7 @@
   <section class="faq" id="faq">
     <div class="wrap">
       <h2 class="display reveal">Questions.</h2>
+      <span class="vhs-bar js-bar faq__bar" aria-hidden="true"></span>
       <div class="qalist">
         <div class="qa"><button type="button">Is the demo free?<span class="plus"></span></button><div class="ans"><p>Yes. The demo is on Steam now. Grab it, bring friends, take a district back.</p></div></div>
         <div class="qa"><button type="button">How many players?<span class="plus"></span></button><div class="ans"><p>1 to 4, online co-op. Play solo or drop in with up to three friends.</p></div></div>
@@ -239,6 +267,7 @@
 <!-- FOOTER (fixed underneath; the page scrolls up off it) -->
 <footer class="footer">
   <div class="wrap">
+    <span class="vhs-bar vhs-bar--full" aria-hidden="true"></span>
     <div class="frow">
       <div class="fcardL">
         <img class="fcardL__icon" src="assets/img/icon-white.png" alt="" width="34" height="45" loading="lazy">
