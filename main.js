@@ -74,9 +74,10 @@
   let lenis = null;
   const isFs = () => document.fullscreenElement || document.webkitFullscreenElement;
   function openPlayer() {
-    if (!pv.src) {                                                          // AV1 where the browser decodes it, H.264 elsewhere
-      const av1 = pv.canPlayType('video/mp4; codecs="av01.0.08M.10"') === "probably";
-      pv.src = (av1 || !CFG.demoVideoFallback) ? (CFG.demoVideo || "assets/video/meatspace-demo-av1.mp4") : CFG.demoVideoFallback;
+    if (!pv.src) {                                                          // same file the hero picked (AV1 or H.264), already cached
+      const av1 = pv.canPlayType('video/mp4; codecs="av01.0.09M.10"') === "probably";
+      pv.src = (heroVideo && heroVideo.currentSrc) ||
+        ((av1 || !CFG.demoVideoFallback) ? (CFG.demoVideo || "assets/video/meatspace-demo-av1.mp4") : CFG.demoVideoFallback);
     }
     player.hidden = false;
     if (!reduce) {                                                           // the tape catches as it starts

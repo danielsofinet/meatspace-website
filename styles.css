@@ -403,7 +403,11 @@ body.loader-gone .loader { visibility: hidden; }
   transform: translateX(var(--lag, 0px)); will-change: transform;
 }
 .fcard .visual { flex: 1 1 auto; min-height: 0; border-radius: var(--radius); overflow: hidden; background: var(--paper-2); }
-.fcard .visual img, .fcard .visual video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.fcard .visual { position: relative; }
+.fcard .visual .pimg { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* Solo / Co-op badge: sits top left over the video, its stripes running in from the card edge */
+.fcard__badge { position: absolute; top: 18px; left: 0; width: 46%; height: auto; pointer-events: none;
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,.35)); }
 .fcard__meta { display: flex; align-items: center; justify-content: space-between; margin: 18px 10px 0; }
 .fcard__num { font: 500 11px/1 var(--mono); letter-spacing: .12em; color: var(--ink-soft); }
 .fcard h3 { margin: 12px 10px 0; font-weight: 700; font-size: clamp(22px, 2.2vw, 28px); line-height: 1.05; letter-spacing: -.015em; }
@@ -488,16 +492,29 @@ body.loader-gone .loader { visibility: hidden; }
 .footer > .wrap { transform-origin: 50% 0%; will-change: transform, opacity; }
 .frow { display: grid; grid-template-columns: 1fr 1.4fr; gap: 14px; }
 .fcardL, .fcardR { position: relative; overflow: hidden; border-radius: var(--radius-card); padding: 30px; min-height: 250px; }
-.fcardL { background: var(--olive); color: var(--paper); display: flex; flex-direction: column; justify-content: space-between; }
-.fcardL::before {           /* the ornament cross grid */
-  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .35;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='38' viewBox='0 0 42 38'%3E%3Cpath d='M21 12v14M14 19h14' stroke='%23ecede9' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
-  -webkit-mask-image: linear-gradient(120deg, transparent 35%, #000 100%); mask-image: linear-gradient(120deg, transparent 35%, #000 100%);
+/* Left plate: a VHS sleeve. Dark tape-box black, the logo's stripes trailing off the icon, scanlines over all */
+.fcardL { background: radial-gradient(110% 90% at 100% 100%, rgba(139,69,255,.2), transparent 60%),
+    radial-gradient(80% 70% at 0% 0%, rgba(24,224,255,.08), transparent 60%), #141118;
+  border: 1px solid rgba(255,255,255,.08); color: var(--paper);
+  display: flex; flex-direction: column; justify-content: space-between; }
+.fcardL::before {           /* scanlines, above the stripes, below the text */
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: var(--scan); opacity: .7;
 }
-.fcardL > * { position: relative; }
-.fcardL__icon { width: 34px; height: auto; }
-.fcardL__tag { font-weight: 700; font-size: clamp(26px, 2.8vw, 36px); line-height: 1; letter-spacing: -.02em; margin-bottom: 12px; }
-.fcardL .plate__mono { color: rgba(236,237,233,.7); }
+.fcardL > * { position: relative; z-index: 2; }
+.fcardL__top { display: flex; align-items: center; gap: 16px; margin-right: -30px; }
+.fcardL__icon { width: 34px; height: auto; flex: none; }
+.fcardL__stripes {          /* the eight logo colours as trails, running off the right edge */
+  flex: 1; height: 46px; position: relative; z-index: 0;
+  background: linear-gradient(180deg,
+    var(--vhs-cyan) 0 4px, transparent 4px 6px, var(--vhs-blue) 6px 10px, transparent 10px 12px,
+    var(--vhs-violet) 12px 16px, transparent 16px 18px, var(--vhs-magenta) 18px 22px, transparent 22px 24px,
+    var(--vhs-red) 24px 28px, transparent 28px 30px, var(--vhs-orange) 30px 34px, transparent 34px 36px,
+    var(--vhs-yellow) 36px 40px, transparent 40px 42px, var(--vhs-white) 42px 46px);
+  filter: drop-shadow(0 0 8px rgba(255,42,212,.45));
+}
+.fcardL__tag { font-weight: 700; font-size: clamp(26px, 2.8vw, 36px); line-height: 1; letter-spacing: -.02em; margin-bottom: 12px;
+  text-shadow: 2px 0 rgba(255,42,212,.55), -2px 0 rgba(24,224,255,.55); }
+.fcardL .plate__mono { color: rgba(236,237,233,.6); }
 .fcardR { background: rgba(236,237,233,.06); border: 1px solid rgba(236,237,233,.1); display: flex; flex-direction: column; justify-content: space-between; }
 .flinks { display: flex; flex-wrap: wrap; gap: 14px 24px; }
 .flinks a { font: 500 12.5px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: rgba(236,237,233,.7); transition: color .2s; }

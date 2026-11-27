@@ -19,9 +19,9 @@ fill the screen, parallax gallery, FAQ, and a footer the page lifts off.
 
 ## Video
 
-- **Hero loop**: `assets/video/hero-loop.mp4`, 18 s silent cut (0:18 to 0:36 of the intro), 1600 px, about 4 MB.
-  Poster frame: `assets/video/hero-poster.jpg`.
-- **Full video** (play button, opens full screen with sound), 1080p, two files set in `config.js`:
+- **Hero**: plays the full demo muted on loop (same two files as below, so the play button starts instantly).
+  Poster frame: `assets/video/hero-poster.webp`.
+- **Full video** (play button, opens full screen with sound), 1080p, two files named in `config.js` and in the hero `<video>` in `index.html`:
   `assets/video/meatspace-demo-av1.mp4` (`demoVideo`, AV1, played by Chrome/Edge/Firefox/newer Safari) and
   `assets/video/meatspace-demo-h264.mp4` (`demoVideoFallback`, H.264 at 30 fps, for everything else).
   GitHub refuses files over 100 MB, so re-encode big sources first:
@@ -29,7 +29,6 @@ fill the screen, parallax gallery, FAQ, and a footer the page lifts off.
 ```
 ffmpeg -i SOURCE.mp4 -c:v libsvtav1 -preset 5 -crf 36 -maxrate 4500k -bufsize 9000k -pix_fmt yuv420p10le -g 240 -c:a aac -b:a 160k -movflags +faststart assets/video/meatspace-demo-av1.mp4
 ffmpeg -i SOURCE.mp4 -vf fps=30 -c:v libx264 -preset slow -crf 23 -maxrate 5M -bufsize 10M -profile:v high -pix_fmt yuv420p -g 60 -c:a aac -b:a 160k -movflags +faststart assets/video/meatspace-demo-h264.mp4
-ffmpeg -ss 18 -t 18 -i SOURCE.mp4 -an -vf scale=1600:-2,fps=30 -c:v libx264 -preset slow -crf 27 -pix_fmt yuv420p -movflags +faststart assets/video/hero-loop.mp4
 ```
 
 ## Swapping placeholder art

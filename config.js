@@ -7,6 +7,7 @@ window.MEATSPACE = {
 
   // The full video that opens full screen from the hero's play button.
   // demoVideo is AV1 (small, sharp); browsers that can't decode AV1 get demoVideoFallback (H.264).
+  // The hero background plays the same two files: if you rename them, update the hero <video> in index.html too.
   // GitHub Pages refuses files over 100 MB: re-encode bigger videos first (see README).
   demoVideo: "assets/video/meatspace-demo-av1.mp4",
   demoVideoFallback: "assets/video/meatspace-demo-h264.mp4",

@@ -90,11 +90,12 @@
 <!-- PAGE (scrolls up off the fixed footer) -->
 <div class="page" id="page">
 
-  <!-- HERO: looping cut of the intro; play opens the full video full screen -->
+  <!-- HERO: the demo plays muted on loop; play opens the same video full screen with sound -->
   <section class="hero" id="top" aria-label="MEATSPACE">
     <video class="hero__video" id="heroVideo" autoplay muted loop playsinline preload="auto"
-           poster="assets/video/hero-poster.jpg" aria-hidden="true">
-      <source src="assets/video/hero-loop.mp4" type="video/mp4">
+           poster="assets/video/hero-poster.webp" aria-hidden="true">
+      <source src="assets/video/meatspace-demo-av1.mp4" type='video/mp4; codecs="av01.0.09M.10"'>
+      <source src="assets/video/meatspace-demo-h264.mp4" type="video/mp4">
     </video>
     <div class="hero__shade" aria-hidden="true"></div>
     <div class="hero__vhs" aria-hidden="true"><div class="vhs-grain"></div><div class="vhs-roll"></div></div>
@@ -181,25 +182,25 @@
     <div class="pin" id="featPin">
       <div class="ftrack" id="ftrack">
         <article class="fcard">
-          <div class="visual"><img class="pimg" src="assets/img/cards/explore.jpg" alt="A player in tall grass, with a giant machine's legs in the distance" loading="lazy"></div>
-          <div class="fcard__meta"><span class="tag">Explore</span><span class="fcard__num">01 / 06</span></div>
+          <div class="visual"><video class="pimg cardvid" src="assets/img/cards/solo.mp4" poster="assets/img/cards/solo.webp" muted loop playsinline preload="none" aria-label="Solo gameplay"></video><img class="fcard__badge" src="assets/img/cards/solo-badge.webp" alt="" width="720" height="444" loading="lazy"></div>
+          <div class="fcard__meta"><span class="tag">Solo</span><span class="fcard__num">01 / 06</span></div>
           <h3>A world gone quiet</h3>
           <p>Meadows, canyons and deep forest, patrolled by things that never sleep.</p>
         </article>
         <article class="fcard">
-          <div class="visual"><img class="pimg" src="assets/img/cards/coop.jpg" alt="Co-op gameplay" loading="lazy"></div>
+          <div class="visual"><video class="pimg cardvid" src="assets/img/cards/coop.mp4" poster="assets/img/cards/coop.webp" muted loop playsinline preload="none" aria-label="Co-op gameplay"></video><img class="fcard__badge" src="assets/img/cards/coop-badge.webp" alt="" width="720" height="383" loading="lazy"></div>
           <div class="fcard__meta"><span class="tag tag--orange">Co-op</span><span class="fcard__num">02 / 06</span></div>
           <h3>Bring three friends</h3>
           <p>Drop in together, split up, cover each other, pick each other up off the floor.</p>
         </article>
         <article class="fcard">
-          <div class="visual"><img class="pimg" src="assets/img/cards/machines.jpg" alt="The machines" loading="lazy"></div>
+          <div class="visual"><video class="pimg cardvid" src="assets/img/cards/machines.mp4" poster="assets/img/cards/machines.webp" muted loop playsinline preload="none" aria-label="The machines"></video></div>
           <div class="fcard__meta"><span class="tag">Machines</span><span class="fcard__num">03 / 06</span></div>
           <h3>Small, big, flying</h3>
           <p>Every machine has a job. Learn it, then take it apart. Guns for the air, blades for the ground.</p>
         </article>
         <article class="fcard">
-          <div class="visual"><img class="pimg" src="assets/img/cards/districts.jpg" alt="Districts" loading="lazy"></div>
+          <div class="visual"><video class="pimg cardvid" src="assets/img/cards/districts.mp4" poster="assets/img/cards/districts.webp" muted loop playsinline preload="none" aria-label="Districts"></video></div>
           <div class="fcard__meta"><span class="tag tag--olive">Districts</span><span class="fcard__num">04 / 06</span></div>
           <h3>Reclaim them one by one</h3>
           <p>Each district is run by its own boss AI. Shut it down and the district is yours again.</p>
@@ -282,10 +283,13 @@
     <span class="vhs-bar vhs-bar--full" aria-hidden="true"></span>
     <div class="frow">
       <div class="fcardL">
-        <img class="fcardL__icon" src="assets/img/icon-white.png" alt="" width="34" height="45" loading="lazy">
+        <div class="fcardL__top">
+          <img class="fcardL__icon" src="assets/img/icon-white.png" alt="" width="34" height="45" loading="lazy">
+          <span class="fcardL__stripes" aria-hidden="true"></span>
+        </div>
         <div>
-          <p class="fcardL__tag">Built by humans.</p>
-          <p class="plate__mono">MEATSPACE SYSTEMS / TYPE MS-01 / PART NO.: MS20261125</p>
+          <p class="fcardL__tag">Be kind. Rewind.</p>
+          <p class="plate__mono"><span class="nb">MEATSPACE SYSTEMS /</span> <span class="nb">TYPE MS-01 /</span> <span class="nb">PART NO.: MS20261125</span></p>
         </div>
       </div>
       <div class="fcardR">
