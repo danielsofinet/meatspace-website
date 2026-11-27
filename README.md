@@ -57,3 +57,8 @@ Until `signup.action` is set, the form says sign-ups aren't connected and stores
 python -m http.server 8765
 ```
 then open http://127.0.0.1:8765
+
+## Deploying
+
+`index.html` loads `styles.css`, `config.js` and `main.js` with a `?v=` tag. Bump it (any new value) whenever
+those files change, otherwise browsers can pair the new page with a cached old stylesheet for up to 10 minutes.
