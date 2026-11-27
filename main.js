@@ -132,8 +132,8 @@
   gsap.ticker.add(t => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);
 
-  /* Hero logo: line-mask reveal (slides up from behind a clip) */
-  gsap.from(".hero__logo .line > img", { yPercent: 110, duration: 1.15, ease: "power4.out", delay: 0.15 });
+  /* Hero logo: wipe-up reveal; the clip is cleared afterwards so the VHS glow is never boxed in */
+  gsap.fromTo(".hero__logo .line > img", { clipPath: "inset(100% -20% -20% -20%)", y: 40 }, { clipPath: "inset(-20% -20% -20% -20%)", y: 0, duration: 1.15, ease: "power4.out", delay: 0.15, clearProps: "clipPath" });
 
   /* Fade-up reveal */
   $$(".reveal").forEach(el => {
